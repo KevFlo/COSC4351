@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import Navbar from './component/Navbar';
 import './App.css';
 
 function butClick(){
@@ -10,11 +10,7 @@ function App() {
     <div className="App">
         <div className="header">
           <div className="logo">KYBALION</div>
-          <ul>
-              <li><button className="nav-button" onClick={butClick}>Reservation</button></li>
-              <li><button className="nav-button" onClick={butClick}>Register</button></li>
-              <li><button className="nav-button" onClick={butClick}>Login</button></li>
-          </ul>
+          <Navbar />
         </div>
         <div className="content">
           <div className="sample-text">SAMPLE TEXT</div>
