@@ -114,6 +114,9 @@ const Reservation = () =>   {
                 <p className="Reservation-Form-Text">
                     Already have an account? <Link to="/login">Sign In</Link>
                 </p>
+                <p className="Reservation-Form-Text">
+                    Don't have an account? <Link to="/register">Sign Up</Link>
+                </p>
             </div>
         </div>
         

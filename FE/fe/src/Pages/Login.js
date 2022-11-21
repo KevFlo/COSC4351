@@ -79,7 +79,7 @@ const Login = () => {
                     <input type="submit" className="login-form-button" value="Login" />
                 </form>
                 <p className="login-Login">
-                    Don't have an account? <Link to="/Login">Login</Link>
+                    Don't have an account? <Link to="/Register">Register</Link>
                 </p>
             </div>
         </div>
