@@ -1,28 +1,33 @@
 import Navbar from './component/Navbar';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Reservation from './Pages/Reservations';
+import Home from './Pages/Home';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
-function butClick(){
-  alert('You clicked a button!')
-}
+
 
 function App() {
+
   return (
-    <div className="App">
-        <div className="header">
-          <div className="logo">KYBALION</div>
-          <Navbar />
-        </div>
-        <div className="content">
-          <div className="sample-text">SAMPLE TEXT</div>
-        </div>
-        <div className="image-cards">
-            <div className="image-temp"></div>
-            <div className="image-temp"></div>
-            <div className="image-temp"></div>
-          </div>
-        <div className="footer">@COSC4351</div>
-    </div>
+    <>
+      <Navbar />
+      <div className='container'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='Login' element={<Login />} />
+          <Route path='Register' element={<Register />} />
+          <Route path='Reservation' element={<Reservation />} />
+        </Routes>
+      </div>
+      
+    </>
+    
+    
   );
 }
 
 export default App;
+
+
