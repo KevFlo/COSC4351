@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const admin_creds = require('./admincreds.json');
+const creds = require('./creds.json');
 var reservation_count, table_count;
 var num_guests = [];
 var table_num = [];
@@ -7,14 +7,14 @@ var capacity = [];
 var accomodated_table = [];
 
 // Connection details provided by creds.json
-const connection = mysql.createConnection(admin_creds);
+const connection = mysql.createConnection(creds);
 
 // Connect to the database
 connection.connect();
 
 // First, get number of guests and row count to determine which tables can accomdate the number of guests
 connection.query(`SELECT number_guests FROM reservations;`, (error, results, fields) => {
-    if(error) throw error;
+    if (error) throw error;
     reservation_count = results.length;
     for (i = 0; i < reservation_count; i++) {
         num_guests.push(results[i].number_guests);
@@ -68,13 +68,38 @@ connection.query(`SELECT * FROM tables;`, (error, results, fields) => {
     console.dir(accomodated_table, {'maxArrayLength':null});
 });
 
-/*/ Update the tables
-for (i = 0; i < count; i++) {
-    connection.query(`UPDATE reservations SET table_number`, (error, results, fields) => {
-        if (error) throw error;
+var emails = []
 
-    });
-}*/
+// Use email to update each row in the table
+connection.query(`SELECT email FROM reservations;`, (error, results) => {
+    if (error) throw error;
+    
+    for (i = 0; i < results.length; i++) {
+        emails.push(results[i].email);        
+    }
+    console.log(emails);
+});
+
+// Update the tables
+connection.beginTransaction(err => {
+    if (err) throw err;
+    for (i = 0; i < reservation_count; i++) {
+        connection.query(`UPDATE reservations SET table_number = ${accomodated_table[i]} WHERE email = ${emails[i]};`, (error, results) => {
+            if (error) {
+                return connection.rollback(() => {
+                    throw error;
+                }); 
+            }
+        });
+    }
+    connection.commit(err => {
+        if (err) {
+            return connection.rollback(() => {
+                throw err;
+            }); 
+        }
+    })
+})
 
 // Close connection when finished
 connection.end();
