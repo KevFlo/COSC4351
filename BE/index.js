@@ -12,8 +12,8 @@ app.use(express.urlencoded({
 
 // Start
 app.get('/backend', (req, res) => {
-    console.log("Conection from React frontend")
-    res.send({ express: 'Backend connected to REACT!' });
+    console.log("Conection from React frontend");
+    //res.send('<p>Connected to Express backend!</p>');
 });
 
 // Routes go here

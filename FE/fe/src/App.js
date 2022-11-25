@@ -9,9 +9,7 @@ import './App.css';
 
 
 function App() {
-
-  fetch('/backend')
-
+  fetch('/backend');
   return (
     <>
       <Navbar />
