@@ -77,29 +77,17 @@ connection.query(`SELECT email FROM reservations;`, (error, results) => {
     for (i = 0; i < results.length; i++) {
         emails.push(results[i].email);        
     }
-    console.log(emails);
-});
-
-// Update the tables
-connection.beginTransaction(err => {
-    if (err) throw err;
+    //console.log(emails);
+    // Update the tables
     for (i = 0; i < reservation_count; i++) {
-        connection.query(`UPDATE reservations SET table_number = ${accomodated_table[i]} WHERE email = ${emails[i]};`, (error, results) => {
+        /*connection.query(`UPDATE reservations SET table_number = ${accomodated_table[i]} WHERE email = '${emails[i]}';`, (error, results) => {
             if (error) {
-                return connection.rollback(() => {
-                    throw error;
-                }); 
+                throw error;
             }
-        });
+        });*/
+        console.log(`UPDATE reservations SET table_number = ${accomodated_table[i]} WHERE email = '${emails[i]}';`);
     }
-    connection.commit(err => {
-        if (err) {
-            return connection.rollback(() => {
-                throw err;
-            }); 
-        }
-    })
-})
+});
 
 // Close connection when finished
 connection.end();
