@@ -1,7 +1,7 @@
 // Libraries used for the Node Express Server
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // Used for parsing JSON to retrieve information from frontend
 app.use(express.static(__dirname + '/public'));
@@ -10,12 +10,21 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-// Start at index.html
-app.get('/', (req, res) => {
-    res.sendFile('./index.html', {root: __dirname}); // At the moment, this will not work
+// Start
+app.get('/backend', (req, res) => {
+    console.log("Conection from React frontend")
+    res.send({ express: 'Backend connected to REACT!' });
 });
 
 // Routes go here
+const loginRouter = require('./routes/login');
+app.use('/login', loginRouter);
+
+const registerRouter = require('./routes/register');
+app.use('/register', registerRouter);
+
+const reservationRouter = require('./routes/reservation');
+app.use('/reservation', reservationRouter);
 
 // Start the express server
 app.listen(port, () => {
