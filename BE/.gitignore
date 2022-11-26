@@ -1,4 +1,5 @@
 /node_modules
 
 creds.json
+admincreds.json
 package-lock.json
