@@ -49,3 +49,63 @@
   .nav li:hover {
     background-color: #2E6686;
   }
+
+/* CSS for the Forms - Register , Login  */
+
+  .register-container   {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .register-title{
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #B4B2A8;
+    ;
+    background-color: #000000;
+  }
+
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 1000px;
+    height: 778px;
+    padding: 1rem;
+    background-color: #000000;
+    border-radius: 1rem;
+  }
+
+  .register-form-label {
+    width: 54px;
+    height: 27px;
+    justify-content: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 1.25rem;
+    color: #FFFFFF;
+  }
+
+  .register-form-button{
+    background-color: aqua; 
+    border-color: aqua;
+  }
+
+  .Reservation-Form-Form-Input {
+    position: absolute;
+    width: 175px;
+    height: 27px;
+    position: absolute;
+    background: #FFFFFF;
+  }
+

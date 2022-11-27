@@ -5,13 +5,6 @@ import { Link, Redirect } from 'react-router-dom';
 // import './Login.css';
 
 
-// export default function Login() {
-//     return (
-//       <h1> Login</h1>
-
-//   );
-// }
-
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',

@@ -13,12 +13,15 @@ import { Link, Redirect } from 'react-router-dom';
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
+        // email: '',
+        mailingAddress: '',
+        billingAddress: '',
+        prefPayment: '',        
         password: '',
         password2: '',
     });
     
-    const { name, email, password, password2 } = formData;
+    const { name, mailingAddress, billingAddress, prefPayment, password, password2 } = formData;
     
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +33,9 @@ const Register = () => {
         } else {
         const newUser = {
             name,
-            email,
+            mailingAddress,
+            billingAddress,
+            prefPayment,
             password,
         };
     
@@ -69,16 +74,44 @@ const Register = () => {
                         />
                     </div>
                     <div className="register-form-group">
-                        <label className="register-form-label">Email</label>
+                        <label className="register-form-label">Mailing Address</label>
                         <input
 
                             className="register-form-input"
-                            type="email"
-                            placeholder="Email Address"
-                            name="email"
-                            value={email}
+                            type="mailingAddress"
+                            placeholder="1234 Main St"
+                            name="mailingAddress"
+                            value={mailingAddress}
                             onChange={(e) => onChange(e)}
                             required
+                        />
+                    </div>
+                    <div className="register-form-group">
+                        <label className="register-form-label">Billing Address</label>
+                        <input
+                            className="register-form-input"
+                            type="billingAddress"
+                            placeholder="1234 Main St"
+                            name="billingAddress"
+                            value={billingAddress}
+                            onChange={(e) => onChange(e)}
+                            required
+                            // minLength="6"
+                        />
+                    </div>
+                    <div className="register-form-group">
+                        <label className="register-form-label">
+                            Preferred Payment Method
+                        </label>
+                        <input
+                            className="register-form-input"
+                            type="prefPayment"
+                            placeholder="Preferred Payment Method"
+                            name="prefPayment"
+                            value={prefPayment}
+                            onChange={(e) => onChange(e)}
+                            required
+                            // minLength="6"
                         />
                     </div>
                     <div className="register-form-group">
@@ -95,9 +128,7 @@ const Register = () => {
                         />
                     </div>
                     <div className="register-form-group">
-                        <label className="register-form-label">
-                            Confirm Password
-                        </label>
+                        <label className="register-form-label">Confirm Password</label>
                         <input
                             className="register-form-input"
                             type="password"
