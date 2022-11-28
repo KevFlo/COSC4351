@@ -10,6 +10,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+
 // Start
 app.get('/backend', (req, res) => {
     console.log("Conection from React frontend");

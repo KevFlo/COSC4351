@@ -11,6 +11,7 @@ const Login = () => {
         password: '',
     });
     
+    
     const { email, password } = formData;
     
     const onChange = (e) =>
@@ -19,27 +20,31 @@ const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log('SUCCESS');
-        const newUser = {
-        email,
-        password,
-        };
+        // const newUser = {
+        // email,
+        // password,
+        // };
     
-        try {
-        const config = {
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        };
+        // try {
+        // const config = {
+        //     headers: {
+        //     'Content-Type': 'application/json',
+        //     },
+        // };
     
-        const body = JSON.stringify(newUser);
+        // const body = JSON.stringify(newUser);
     
-        // const res = await axios.post('/api/users', body, config);
-        // console.log(res.data);
-        } catch (err) {
-        console.error(err.response.data);
-        }
+        // // const res = await axios.post('/api/users', body, config);
+        // // console.log(res.data);
+        // } catch (err) {
+        // console.error(err.response.data);
+        // }
         // To test login
-        fetch(`/login/${email}/${password}`);
+        fetch(`/login/${email}/${password}`)
+            .then(res => res.text())
+            .then(res => this.setState({ apiResponse: res }))
+            .catch(err => err);
+        
     };
 
     return (

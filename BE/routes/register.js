@@ -18,6 +18,7 @@ router.post('/:name/:email/:password/:confirmPassword', (req, res) => {
             console.error('Error - Email already exists!');
             return;
         }
+        // name, email, mailingAddress, billingAddress, prefPayment, password
         pool.query(`INSERT INTO users (name, email, password) values ('${name}', '${email}', '${password})';`, (err, result) => {
             if (err) return err;
         });

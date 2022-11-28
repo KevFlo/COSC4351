@@ -13,7 +13,7 @@ import { Link, Redirect } from 'react-router-dom';
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
-        // email: '',
+        email: '',
         mailingAddress: '',
         billingAddress: '',
         prefPayment: '',        
@@ -21,7 +21,7 @@ const Register = () => {
         password2: '',
     });
     
-    const { name, mailingAddress, billingAddress, prefPayment, password, password2 } = formData;
+    const { name, email ,mailingAddress, billingAddress, prefPayment, password, password2 } = formData;
     
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,26 +33,12 @@ const Register = () => {
         } else {
         const newUser = {
             name,
+            email,
             mailingAddress,
             billingAddress,
             prefPayment,
             password,
         };
-    
-        try {
-            const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            };
-    
-            const body = JSON.stringify(newUser);
-    
-            // const res = await axios.post('/api/users', body, config);
-            // console.log(res.data);
-        } catch (err) {
-            console.error(err.response.data);
-        }
         }
     };
 
@@ -69,6 +55,18 @@ const Register = () => {
                             placeholder="Name"
                             name="name"
                             value={name}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className="register-form-group">
+                        <label className="register-form-label">E-mail</label>
+                        <input
+                            className="register-form-input"
+                            type="text"
+                            placeholder="E-mail"
+                            name="email"
+                            value={email}
                             onChange={(e) => onChange(e)}
                             required
                         />
