@@ -94,7 +94,6 @@ const Register = () => {
                             value={billingAddress}
                             onChange={(e) => onChange(e)}
                             required
-                            // minLength="6"
                         />
                     </div>
                     <div className="register-form-group">
@@ -109,7 +108,6 @@ const Register = () => {
                             value={prefPayment}
                             onChange={(e) => onChange(e)}
                             required
-                            // minLength="6"
                         />
                     </div>
                     <div className="register-form-group">
