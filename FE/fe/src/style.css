@@ -2,13 +2,23 @@
     box-sizing: border-box;
   }
   
-  body {
+  html, body {
     margin: 0;
+    height: 100vh;
   }
   
+  #root{
+    height: 100%;
+  }
+
+  body{
+    margin: 0;
+  }
+
   .container {
-    margin: 1rem;
     text-align: center;
+    height: calc(100vh - 184px);
+    background-color: #194A66;
   }
   
   .nav {
@@ -16,13 +26,15 @@
     color: #B4B2A8;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     gap: 2rem;
-    padding: 0 1rem;
+    padding: 40px 20px;
   }
   
   .site-title {
-    font-size: 2rem;
+    font-size: 72px;
+    font-weight: 400;
+    color: gray;
   }
   
   .nav ul {
@@ -30,18 +42,29 @@
     margin: 0;
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
   }
   
   .nav a {
     color: inherit;
     text-decoration: none;
     height: 100%;
+    width: 122px;
     display: flex;
     align-items: center;
     padding: .25rem;
   }
   
+  .nav li{
+    background-color: #3882f6;
+    color: white;
+    border: none;
+    width: 144px;
+    height: 48px;
+    padding: 12px 36px 12px 12px;
+    text-align: left;
+  }
+
   .nav li.active {
     background-color: #4C96C0;
   }
@@ -50,62 +73,202 @@
     background-color: #2E6686;
   }
 
-/* CSS for the Forms - Register , Login  */
+  /* CSS for Home Page */
+
+  .Home{
+    height: 100%;
+  }
+
+  .home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  /* CSS for Login Page */
+
+  .login{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+    height: 80%;
+    width: 80%;
+    background-color: black;
+  }
+
+  .login-title{
+    color: #B4B2A8;
+    font-weight: 400;
+    font-size: 45px;
+  }
+
+  .login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 320px;
+    justify-content: space-evenly;
+  }
+
+  .login-form-group{
+   display: flex;
+   justify-content: space-between;
+   width: 300px; 
+  }
+
+  .login-form-label{
+    color: white;
+  }
+
+  .login-form-input{
+    width: 175px;
+    height: 27px;
+    background: #FFFFFF;
+    border: none;
+  }
+
+  .login-form-button{
+    background-color: #75CDE9;
+    border: none;
+    width: 100px;
+    height: 25px;
+  }
+
+  .login-Login{
+    color: white;
+  }
+
+/* CSS for Register Page  */
+
+  .register{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .register-container   {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
+    justify-content: space-evenly;
+    align-items: stretch;
+    height: 80%;
+    width: 80%;
+    background-color: black;
   }
 
   .register-title{
-    font-size: 2rem;
-    margin-bottom: 20px;
     color: #B4B2A8;
-    ;
-    background-color: #000000;
+    font-weight: 400;
+    font-size: 45px;
   }
 
   .register-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    width: 1000px;
-    height: 778px;
-    padding: 1rem;
-    background-color: #000000;
-    border-radius: 1rem;
+    height: 320px;
+    justify-content: space-around;
+  }
+
+  .register-form-group{
+    display: flex;
+    justify-content: space-between;
+    width: 400px; 
   }
 
   .register-form-label {
-    width: 54px;
+    color: white;
+  }
+
+  .register-form-input{
+    width: 175px;
     height: 27px;
-    justify-content: center;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    padding: 1.25rem;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    border: none;
   }
 
   .register-form-button{
-    background-color: aqua; 
-    border-color: aqua;
+    background-color: #75CDE9;
+    border: none;
+    width: 100px;
+    height: 25px;
+  }
+
+  .register-text{
+    color: white;
+  }
+
+  /* CSS for Reservation Page */
+
+  .Reservation-Form{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Reservation-Form-Content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+    height: 80%;
+    width: 80%;
+    background-color: black;
+  }
+
+  .Reservation-Form-Title{
+    color: #B4B2A8;
+    font-weight: 400;
+    font-size: 45px;
+  }
+
+  .Reservation-Form-Form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 320px;
+    justify-content: space-around;
+  }
+
+  .Reservation-Form-Form-Group{
+    display: flex;
+    justify-content: space-between;
+    width: 400px; 
+  }
+
+  .Reservation-Form-Form-Label{
+    color: white;
   }
 
   .Reservation-Form-Form-Input {
-    position: absolute;
     width: 175px;
     height: 27px;
-    position: absolute;
     background: #FFFFFF;
+    border: none;
   }
+
+  .Reservation-Form-Form-Button{
+    background-color: #75CDE9;
+    border: none;
+    width: 100px;
+    height: 25px;
+  }
+
+  .Reservation-Form-Text{
+    margin: 0;
+    color: white;
+  }
+
 

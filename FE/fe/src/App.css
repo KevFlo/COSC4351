@@ -42,7 +42,7 @@ ul{
 .content{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   padding-top: 50px;
   flex-grow: 1;
 }
