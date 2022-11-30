@@ -108,7 +108,12 @@ const Register = () => {
                         <label className="register-form-label">
                             Preferred Payment Method
                         </label>
-                        <input
+                        <select className="register-form-input" name="country" onChange={(e) => onChange(e)} required>
+                            <option value="australia">CC</option>
+                            <option value="canada">Cash</option>
+                            <option value="usa">Check</option>
+                        </select>
+                        {/* <input
                             className="register-form-input"
                             type="prefPayment"
                             placeholder="Preferred Payment Method"
@@ -116,7 +121,7 @@ const Register = () => {
                             value={prefPayment}
                             onChange={(e) => onChange(e)}
                             required
-                        />
+                        /> */}
                     </div>
                     <div className="register-form-group">
                         <label className="register-form-label">Password</label>

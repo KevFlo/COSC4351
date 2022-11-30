@@ -1,4 +1,5 @@
 import Navbar from './component/Navbar';
+import Footer from './component/Footer';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Reservation from './Pages/Reservations';
@@ -21,6 +22,7 @@ function App() {
           <Route path='Reservation' element={<Reservation />} />
         </Routes>
       </div>
+      <Footer />
       
     </>
     
