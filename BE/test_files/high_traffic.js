@@ -1,4 +1,4 @@
-const date = new Date(2022, 11 - 1, 29);
+const date = new Date(2022, 12 - 1, 2);
 console.log(date.getDate());
 console.log(date.getMonth() + 1);
 console.log(date.getDay());
@@ -19,4 +19,4 @@ function isHoliday(_date) {
     return holidays.includes(month_day) || dotw_holidays.includes(month_week_dotw);
 }
 
-console.log('High Traffic Day: '+isWeekend(date) || isHoliday(date));
+console.log('High Traffic Day: ' + (isWeekend(date) || isHoliday(date)));
