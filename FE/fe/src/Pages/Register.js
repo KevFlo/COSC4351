@@ -40,6 +40,14 @@ const Register = () => {
             password,
         };
         }
+        // For testing
+        fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`,
+        {
+            method: "POST"
+        })
+            .then(res => res.text())
+            .then(res => this.setState({ apiResponse: res }))
+            .catch(err => err);
     };
 
     return (
