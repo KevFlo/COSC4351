@@ -18,6 +18,7 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     pool.query(availableTables, [dateTime, dateTime], (error, results) => {
         if (error) {
             console.error(error.message);
+            res.status(500);
             return error;
         }
         //console.table(results);
@@ -27,6 +28,10 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
         });
         console.log(tables);
         console.log(seats);
+        res.status(200).json({
+            tables: tables,
+            seats: seats
+        });
     });
 });
 
@@ -41,10 +46,16 @@ router.post('/:partySize/:date/:time/:phoneNumber/:name/:email/:tableNumber', (r
     pool.query(makeReservation, [name, phoneNumber, email, dateTime, partySize, tableNumber], (error, results) => {
         if (error) {
             console.error(error.message);
+            res.status(500);
             return error;
         }
         if (results.affectedRows === 1) {
             console.log('Reservation Successful!');
+            res.status(200);
+        }
+        else {
+            console.log('Error making reservation');
+            res.status(500).json({ error: 'Unable to make reservation' });
         }
     });
 });

@@ -42,6 +42,7 @@ const Login = () => {
         // To test login
         await fetch(`/login/${email}/${password}`)
             .then(res => res.text())
+            .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
             .catch(err => err);
         

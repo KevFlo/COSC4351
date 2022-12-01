@@ -9,6 +9,7 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
     // Confirm passwords match
     if (password !== password2) {
         console.error('Error - Passwords do not match!');
+        res.status(200).json({ error: 'Passwords do not match' });
         return;
     }
     // Note, should be changed so that the frontend hashes the password instead of doing it here
@@ -18,10 +19,12 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
     pool.query(checkEmail, [email], (error, results) => {
         if (error) {
             console.error(error.message);
+            res.status(500);
             return error;
         }
         if (results.length > 0) {
             console.error('Error - Email already exists!');
+            res.status(200).json({ error: 'Email already exists!' });
             return;
         }
         // name, email, mailingAddress, billingAddress, prefPayment, password
@@ -30,11 +33,19 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
         pool.query(createUser, [email, hash, name, mailingAddress, billingAddress, prefPayment], (err, result) => {
             if (err) {
                 console.error(err.message);
+                res.status(500);
                 return err;
             }
             if (result.affectedRows === 1) {
                 console.log('New user successfully created!');
-                // Response goes here
+                res.status(200).json({
+                    name: name,
+                    email: email
+                });
+            }
+            else {
+                console.log('Error creating user!');
+                res.status(500).json({ error: 'Error creating user' });
             }
         });
     });
