@@ -41,11 +41,12 @@ const Register = () => {
         };
         }
         // For testing
-        fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`,
+        await fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`,
         {
             method: "POST"
         })
             .then(res => res.text())
+            .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
             .catch(err => err);
     };

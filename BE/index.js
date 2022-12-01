@@ -10,13 +10,6 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-
-// Start
-app.get('/backend', (req, res) => {
-    console.log("Conection from React frontend");
-    //res.send('<p>Connected to Express backend!</p>');
-});
-
 // Routes go here
 const loginRouter = require('./routes/login');
 app.use('/login', loginRouter);
