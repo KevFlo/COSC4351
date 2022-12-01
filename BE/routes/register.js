@@ -2,6 +2,8 @@ const express = require('express');
 const crypto = require('crypto');
 const router = express.Router();
 const pool = require('../db_client');
+const env = require('dotenv').config()
+var jwt = require('jsonwebtoken');
 
 router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/:prefPayment', (req, res) => {
     const {name, email, password, password2, mailingAddress, billingAddress, prefPayment} = req.params;
@@ -38,10 +40,9 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
             }
             if (result.affectedRows === 1) {
                 console.log('New user successfully created!');
-                res.status(200).json({
-                    name: name,
-                    email: email
-                });
+                const user = {name: name, email:email};
+                const token = jwt.sign({user}, process.env.SECRET);
+                res.json({token});
             }
             else {
                 console.log('Error creating user!');

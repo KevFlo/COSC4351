@@ -1,7 +1,10 @@
 const express = require('express');
 const crypto = require('crypto');
+var jwt = require('jsonwebtoken');
 const router = express.Router();
+const env = require('dotenv').config()
 const pool = require('../db_client');
+
 
 router.get('/:email/:password', (req, res) => {
     const {email, password} = req.params;
@@ -18,10 +21,14 @@ router.get('/:email/:password', (req, res) => {
         }
         if (results.length === 1) {
             console.log('Successful Login!');
-            res.status(200).json({
-                name: results[0].name,
-                email: results[0].email 
-            });
+            const user = {name: results[0].name, email:results[0].email};
+            // res.status(200).json({
+            //     name: results[0].name,
+            //     email: results[0].email 
+            // });
+            const token = jwt.sign({user}, process.env.SECRET);
+            res.json({token});
+
         }
         else {
             console.log('Incorrect Login! Please try again!');
