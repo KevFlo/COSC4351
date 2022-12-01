@@ -1,15 +1,9 @@
 // Registration page for the app
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-// import axios from 'axios';
-// import './Register.css';
+import Card from '../component/cc';
 
-// export default function Register() {
-//     return (
-//       <h1> Register</h1>
 
-//   );
-// }
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -109,20 +103,20 @@ const Register = () => {
                         <label className="register-form-label">
                             Preferred Payment Method
                         </label>
-                        <select className="register-form-input" name="country" onChange={(e) => onChange(e)} required>
-                            <option value="australia">CC</option>
-                            <option value="canada">Cash</option>
-                            <option value="usa">Check</option>
+                        <select 
+                            className="register-form-input" 
+                            type='prefPayment' 
+                            placeholder="Preferred Payment Method" 
+                            name="prefPayment" 
+                            value={prefPayment} 
+                            onChange={(e) => onChange(e)} 
+                            required>
+                            <option value="CC">CC</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Check">Check</option>
                         </select>
-                        {/* <input
-                            className="register-form-input"
-                            type="prefPayment"
-                            placeholder="Preferred Payment Method"
-                            name="prefPayment"
-                            value={prefPayment}
-                            onChange={(e) => onChange(e)}
-                            required
-                        /> */}
+                        {/* TODO: make this part render nicely inside the form */}
+                        {prefPayment === 'CC' && <Card/>}
                     </div>
                     <div className="register-form-group">
                         <label className="register-form-label">Password</label>
