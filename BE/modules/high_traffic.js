@@ -1,7 +1,4 @@
-const date = new Date(2022, 11 - 1, 28);
-console.log(date.getDate());
-console.log(date.getMonth() + 1);
-console.log(date.getDay());
+const date = new Date('2022-06-04 15:20');
 const holidays = require('./date_holidays.json');
 // Formatted as "month-weekNumInMonth-dayOfTheWeek"
 const dotw_holidays = require('./dotw_holidays.json');
@@ -23,4 +20,6 @@ function isHighTraffic(_date) {
     return (isWeekend(_date) || isHoliday(_date));
 }
 
-console.log('High Traffic Day: ' + isHighTraffic(date));
+console.log(isHighTraffic(date));
+
+module.exports = isHighTraffic;

@@ -1,17 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db_client');
+const isHighTraffic = require('../modules/high_traffic');
 
 // Retrieve tables that are available to be reserved
 router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     // Partysize, date, time, name, email ,and phonenumber 
     const {partySize, date, time, phoneNumber, name, email} = req.params;
     const dateTime = date + ' ' + time;
+    // Following two lines check to see if the selected date is a high traffic day (weekend or holiday)
+    const newDate = new Date(dateTime);
+    const trafficDay = isHighTraffic(newDate);
     // Following two tables may be part of the response
     var tables = [];
     var seats = [];
     console.log('Retrieving available tables...');
-    console.log(partySize, date, time, phoneNumber, name, email);
+    //console.log(partySize, date, time, phoneNumber, name, email);
     availableTables = `SELECT * FROM tables where table_number NOT IN(
         SELECT table_number FROM reservations WHERE date BETWEEN ADDTIME(?, '-02:00') AND ADDTIME(?, '02:00')
     );`;
@@ -26,11 +30,12 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
             tables.push(results[key].table_number);
             seats.push(results[key].number_seats);
         });
-        console.log(tables);
-        console.log(seats);
+        //console.log(tables);
+        //console.log(seats);
         res.status(200).json({
             tables: tables,
-            seats: seats
+            seats: seats,
+            high_traffic: trafficDay
         });
     });
 });
