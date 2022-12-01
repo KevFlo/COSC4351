@@ -9,12 +9,13 @@ router.get('/:email/:password', (req, res) => {
     console.log(password);
     // Hash the password before checking the db since the db will store hashed passwords for security
     hash = crypto.createHash('sha256').update(password).digest('hex');
-    pool.query(`SELECT * FROM users WHERE email = '${email}' AND password = '${hash}';`, (error, results) => {
+    sql = 'SELECT email FROM users WHERE email = ? OR password = ?;';
+    pool.query(sql, [email, hash], (error, results) => {
         if (error) {
             console.error(error.message); 
             return error;
         }
-        if (results.length > 0) {
+        if (results.length === 1) {
             console.log('Successful Login!');
         }
         else {
