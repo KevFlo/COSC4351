@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 
-const Reservation = () =>   {
+const Reservation = () => {
     const [formData, setFormData] = useState({
         partySize: '',
         date: '',
@@ -19,7 +19,7 @@ const Reservation = () =>   {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const newReservation = {
+        /*const newReservation = {
             partySize,
             date,
             time,
@@ -41,7 +41,15 @@ const Reservation = () =>   {
             // console.log(res.data);
         } catch (err) {
             console.error(err.response.data);
-        }
+        }*/
+        // For testing
+        console.log("Submit");
+        fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/${name}/${email}`, {
+            method: "GET"
+        })
+            .then(res => res.text())
+            .then(res => this.setState({ apiResponse: res }))
+            .catch(err => err);
     };
 
 
@@ -51,7 +59,7 @@ const Reservation = () =>   {
         <div className="Reservation-Form">
             <div className="Reservation-Form-Content">
                 <div className="Reservation-Form-Title">Reservation</div>
-                <form className="Reservation-Form-Form">
+                <form className="Reservation-Form-Form" onSubmit={(e) => onSubmit(e)}>
                     <div className="Reservation-Form-Form-Group">
                         <label className="Reservation-Form-Form-Label">Party Size</label>
                         <input

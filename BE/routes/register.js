@@ -26,7 +26,7 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
         }
         // name, email, mailingAddress, billingAddress, prefPayment, password
         createUser = `INSERT INTO users (preferred_diner, email, password, name, mailing_address, billing_address,
-        points, preferred_payment) values ((SELECT UUID()), ?, ?, ?, ?, ?, 0, ?);`
+        points, preferred_payment) values (UUID(), ?, ?, ?, ?, ?, 0, ?);`
         pool.query(createUser, [email, hash, name, mailingAddress, billingAddress, prefPayment], (err, result) => {
             if (err) {
                 console.error(err.message);
