@@ -57,8 +57,6 @@ export default class CC extends React.Component {
     return (
       <div key='Payment'>
         <div className='App-payment'>
-          <h1>Enter your payment details</h1>
-          <h4>please input your information below</h4>
           <Card
             number={number}
             name={name}
