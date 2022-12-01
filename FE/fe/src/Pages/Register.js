@@ -111,6 +111,7 @@ const Register = () => {
                             value={prefPayment} 
                             onChange={(e) => onChange(e)} 
                             required>
+                            <option selected value=""> </option>
                             <option value="CC">CC</option>
                             <option value="Cash">Cash</option>
                             <option value="Check">Check</option>
