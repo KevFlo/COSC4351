@@ -44,7 +44,7 @@ const Reservation = () => {
         }*/
         // For testing
         console.log("Submit");
-        fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/${name}/${email}`, {
+        await fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/sampleName/sampleEmail`, {
             method: "GET"
         })
             .then(res => res.text())

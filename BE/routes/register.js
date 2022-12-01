@@ -34,6 +34,7 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
             }
             if (result.affectedRows === 1) {
                 console.log('New user successfully created!');
+                // Response goes here
             }
         });
     });

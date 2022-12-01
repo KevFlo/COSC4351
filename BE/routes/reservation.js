@@ -38,7 +38,7 @@ router.post('/:partySize/:date/:time/:phoneNumber/:name/:email/:tableNumber', (r
         if (results.affectedRows === 1) {
             console.log('Reservation Successful!');
         }
-    })
+    });
 });
 
 module.exports = router;
