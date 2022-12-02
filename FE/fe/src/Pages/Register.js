@@ -1,6 +1,6 @@
 // Registration page for the app
 import React, { useState } from 'react';
-import { Link, createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { Link, navigate } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
