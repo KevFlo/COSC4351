@@ -1,7 +1,6 @@
 // Registration page for the app
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import Card from '../component/cc';
+import { Link, redirect } from 'react-router-dom';
 
 
 const Register = () => {
@@ -56,8 +55,6 @@ const Register = () => {
             }
         }
 
-        console.log(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`)
-        
         // For testing
         await fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`, {
             method: "POST",
@@ -71,6 +68,7 @@ const Register = () => {
                 console.log('Error');
             } else {
                 console.log('Success!');
+                
                 if (prefPayment === 'CC') {
                     const rfExpiry = expiry.replace('/', '-');
                     console.log(`/register/${email}/${ccNumber}/${nameOnCC}/${rfExpiry}/${cvc}`)
@@ -80,6 +78,10 @@ const Register = () => {
                             'Content-Type': 'application/json'
                         }
                     });
+                }
+                console.log(res);
+                if ( res[0] === 'token') {
+                    <redirect to="/Login" /> 
                 }
             }
         })

@@ -1,8 +1,6 @@
 // login page that connects to the backend
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-// import axios from 'axios';
-// import './Login.css';
+import { Link, redirect } from 'react-router-dom';
 
 
 const Login = () => {
@@ -44,6 +42,11 @@ const Login = () => {
             .then(res => res.text())
             .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
+            .then(res => {
+                if (res[0] === 'token' ) {
+                    return <redirect to='/Reservation' />
+                }
+            })
             .catch(err => err);
         
     };
