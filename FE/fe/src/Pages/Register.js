@@ -10,35 +10,61 @@ const Register = () => {
         email: '',
         mailingAddress: '',
         billingAddress: '',
-        prefPayment: '',        
+        prefPayment: '',
         password: '',
         password2: '',
     });
-    
-    const { name, email ,mailingAddress, billingAddress, prefPayment, password, password2 } = formData;
-    
+
+    const [ccData, setCCData] = useState({
+        number: '',
+        nameOnCC: '',
+        expiry: '',
+        cvc: '',
+    });
+
+    const { name, email, mailingAddress, billingAddress, prefPayment, password, password2 } = formData;
+
+    const {ccNumber, nameOnCC, expiry, cvc} = ccData;
+
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    
+
+    const ccChange = (e) =>
+        setCCData({ ...ccData, [e.target.name]: e.target.value });
+
     const onSubmit = async (e) => {
         e.preventDefault();
         if (password !== password2) {
-        console.log('Passwords do not match');
+            console.log('Passwords do not match');
         } else {
-        const newUser = {
-            name,
-            email,
-            mailingAddress,
-            billingAddress,
-            prefPayment,
-            password,
-        };
+            const newUser = {
+                name,
+                email,
+                mailingAddress,
+                billingAddress,
+                prefPayment,
+                password,
+            };
+            if (prefPayment === 'CC'){
+                const newCard = {
+                email,
+                ccNumber,
+                nameOnCC,
+                expiry,
+                cvc,
+                };
+            }
         }
-        // For testing
+
+        console.log(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`)
+        if(prefPayment === 'CC'){
+            console.log(`/register/${email}/${ccNumber}/${nameOnCC}/${expiry}/${cvc}`)
+        }
+            // For testing
         await fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`,
-        {
-            method: "POST"
-        })
+            {
+                method: "POST"
+            })
             .then(res => res.text())
             .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
@@ -103,13 +129,13 @@ const Register = () => {
                         <label className="register-form-label">
                             Preferred Payment Method
                         </label>
-                        <select 
-                            className="register-form-input" 
-                            type='prefPayment' 
-                            placeholder="Preferred Payment Method" 
-                            name="prefPayment" 
-                            value={prefPayment} 
-                            onChange={(e) => onChange(e)} 
+                        <select
+                            className="register-form-input"
+                            type='prefPayment'
+                            placeholder="Preferred Payment Method"
+                            name="prefPayment"
+                            value={prefPayment}
+                            onChange={(e) => onChange(e)}
                             required>
                             <option selected value=""> </option>
                             <option value="CC">CC</option>
@@ -117,8 +143,57 @@ const Register = () => {
                             <option value="Check">Check</option>
                         </select>
                         {/* TODO: make this part render nicely inside the form */}
-                        {prefPayment === 'CC' && <Card/>}
                     </div>
+                    {prefPayment === 'CC' && <div className="register-form-group">
+                            <label className="register-form-label">CC Number</label>
+                            <input
+                                className="register-form-input"
+                                type="text"
+                                placeholder="1234 1234 1234 1234"
+                                name="ccNumber"
+                                value={ccNumber}
+                                onChange={(e) => ccChange(e)}
+                            />
+                        </div>
+                        }
+                        {prefPayment === 'CC' && <div className="register-form-group">
+                            <label className="register-form-label">Name on Card</label>
+                            <input
+                                className="register-form-input"
+                                type="text"
+                                placeholder="Name"
+                                name="nameOnCC"
+                                value={nameOnCC}
+                                onChange={(e) => ccChange(e)}
+                            />
+                        </div>
+                        }
+                        {prefPayment === 'CC' && <div className="register-form-group">
+                            <label className="register-form-label">Expiration Date</label>
+                            <input
+                                className="register-form-input"
+                                type="text"
+                                placeholder="12/34"
+                                name="expiry"
+                                value={expiry}
+                                onChange={(e) => ccChange(e)}
+                                maxLength = "5"
+                            />
+                        </div>
+                        }
+                        {prefPayment === 'CC' && <div className="register-form-group">
+                            <label className="register-form-label">CVC</label>
+                            <input
+                                className="register-form-input"
+                                type="text"
+                                placeholder="123"
+                                name="cvc"
+                                value={cvc}
+                                onChange={(e) => ccChange(e)}
+                                maxLength="3"
+                            />
+                        </div>
+                        }
                     <div className="register-form-group">
                         <label className="register-form-label">Password</label>
                         <input
