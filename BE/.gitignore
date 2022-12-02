@@ -2,4 +2,5 @@
 
 creds.json
 admincreds.json
+.env
 package-lock.json

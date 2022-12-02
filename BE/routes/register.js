@@ -5,6 +5,27 @@ const pool = require('../db_client');
 const env = require('dotenv').config()
 var jwt = require('jsonwebtoken');
 
+// For adding card info if preferred payment is cc
+router.post('/:email/:cardNumber/:cardName/:expiry/:cvc', (req, res) => {
+    const {email, cardNumber, cardName, expiry, cvc} = req.params;
+    console.log(email, cardNumber, cardName, expiry, cvc);
+    const cardNumberNoSpaced = cardNumber.split(' ').join('');
+    const month = expiry.substring(0, 2);
+    const year = `20${expiry.substring(3)}`;
+    const date = `${year}-${month}-01`;
+    addCC = 'INSERT INTO payment_cards (email, card_num, card_name, expiration, cvc) VALUES (?, ?, ?, ?, ?);';
+    pool.query(addCC, [email, cardNumberNoSpaced, cardName, date, cvc], (error, results) => {
+        if (error) {
+            console.error(error.message);
+            res.status(500).json({ error: 'There was an error querying the database'});
+            return error;
+        }
+        if (results.affectedRows === 1) {
+            console.log('Payment card added!');
+        }
+    });
+});
+// For creating a new account
 router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/:prefPayment', (req, res) => {
     const {name, email, password, password2, mailingAddress, billingAddress, prefPayment} = req.params;
     console.log(name, email, password, password2, mailingAddress, billingAddress, prefPayment);
@@ -21,7 +42,7 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
     pool.query(checkEmail, [email], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500);
+            res.status(500).json({ error: 'There was an error querying the database'});
             return error;
         }
         if (results.length > 0) {
@@ -35,7 +56,7 @@ router.post('/:name/:email/:password/:password2/:mailingAddress/:billingAddress/
         pool.query(createUser, [email, hash, name, mailingAddress, billingAddress, prefPayment], (err, result) => {
             if (err) {
                 console.error(err.message);
-                res.status(500);
+                res.status(500).json({ error: 'There was an error querying the database'});
                 return err;
             }
             if (result.affectedRows === 1) {
