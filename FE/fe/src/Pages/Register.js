@@ -57,18 +57,34 @@ const Register = () => {
         }
 
         console.log(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`)
-        if(prefPayment === 'CC'){
-            console.log(`/register/${email}/${ccNumber}/${nameOnCC}/${expiry}/${cvc}`)
-        }
-            // For testing
-        await fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`,
-            {
-                method: "POST"
-            })
-            .then(res => res.text())
-            .then(res => console.log(res))
-            .then(res => this.setState({ apiResponse: res }))
-            .catch(err => err);
+        
+        // For testing
+        await fetch(`/register/${name}/${email}/${password}/${password2}/${mailingAddress}/${billingAddress}/${prefPayment}`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error != null) {
+                console.log('Error');
+            } else {
+                console.log('Success!');
+                if (prefPayment === 'CC') {
+                    const rfExpiry = expiry.replace('/', '-');
+                    console.log(`/register/${email}/${ccNumber}/${nameOnCC}/${rfExpiry}/${cvc}`)
+                    fetch(`/register/${email}/${ccNumber}/${nameOnCC}/${rfExpiry}/${cvc}`, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                }
+            }
+        })
+        .then(res => this.setState({ apiResponse: res }))
+        .catch(err => err);
     };
 
     return (
