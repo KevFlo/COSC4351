@@ -39,14 +39,14 @@ const Login = () => {
         // }
         // To test login
         await fetch(`/login/${email}/${password}`)
-            .then(res => res.text())
-            .then(res => console.log(res))
-            .then(res => this.setState({ apiResponse: res }))
+            .then(res => res.json())
             .then(res => {
-                if (res[0] === 'token' ) {
-                    return <redirect to='/Reservation' />
+                console.log(res);
+                if (res.token != null ) {
+                    window.location.replace('http://localhost:3000/reservation');
                 }
             })
+            .then(res => this.setState({ apiResponse: res }))
             .catch(err => err);
         
     };

@@ -1,7 +1,6 @@
 // Registration page for the app
 import React, { useState } from 'react';
-import { Link, redirect } from 'react-router-dom';
-
+import { Link, navigate } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -79,9 +78,9 @@ const Register = () => {
                         }
                     });
                 }
-                console.log(res);
-                if ( res[0] === 'token') {
-                    <redirect to="/Login" /> 
+                console.log(res.token != null);
+                if ( res.token != null) {
+                    window.location.replace('http://localhost:3000/login');
                 }
             }
         })
