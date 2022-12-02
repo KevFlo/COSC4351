@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import Popup from 'reactjs-popup';
+import Popper from '../component/popup';
 import 'reactjs-popup/dist/index.css';
 import TablePick from '../component/TablePicker';
 
@@ -50,24 +50,30 @@ const Reservation = () => {
         await fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/sampleName/sampleEmail`, {
             method: "GET"
         })
-            // .then(res => res.text())
-            // .then(res => console.log(res))
-            .then(res => this.setState({ apiResponse: res }))
+            .then(res => res.json())
+            .then(res => console.log(res))
             .then(res => {
-                var tables = JSON.parse(res).tables;
-                var seats = JSON.parse(res).seats;
-                var highTraffic = JSON.parse(res).high_traffic;
-                console.log(tables);
-                console.log(seats);
-                console.log(highTraffic);
-                if (highTraffic === 'true') {
-                    alert("There will be a 10$ no show fee for this reservation");
-                    // return <TablePick />
-                    <Popup trigger={<button> Trigger</button>} position="right center">
-                        <div>Popup content here !!</div>
-                    </Popup>
+                if (res.error != null) { console.log('Error');}
+                else{
+                    var json = JSON.parse(res);
+                    var tables = json.tables;
+                    var seats = json.seats;
+                    var highTraffic = res["high_traffic"];
+                    console.log(tables);
+                    console.log(seats);
+                    console.log(highTraffic);
+                    if (highTraffic === true) {
+                        console.log('High Traffic');
+                        // return ( <Popper />); // This is a popup that says "High Traffic Day"
+                        // return <TablePick />
+                        // <Popup trigger={<button> Trigger</button>} position="right center">
+                        //     <div>Popup content here !!</div>
+                        // </Popup>
+                    }
                 }
             })
+            .then(res => this.setState({ apiResponse: res }))
+            
             .catch(err => err);
     };
 
