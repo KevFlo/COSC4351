@@ -7530,6 +7530,11 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-seat-picker@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/react-seat-picker/-/react-seat-picker-1.5.3.tgz#d75273c8015e5de718efc5bb310f80c1d23b3ee8"
+  integrity sha512-ggp3LbEz8WhZsXzdlcGOyP0taMJgU4bLwH2mRyCCkp4c2sX87GGJZWtANP9DSqb+ns4b4qlnAm6U1W2qMKZYrQ==
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"

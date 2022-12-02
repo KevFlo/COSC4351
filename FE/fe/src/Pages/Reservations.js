@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import TablePick from '../component/TablePicker';
 
 
 const Reservation = () => {
@@ -50,6 +51,11 @@ const Reservation = () => {
             .then(res => res.text())
             .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
+            .then(res => {
+                if (res[0] === 'token') {
+                    return <TablePick />
+                }
+            })
             .catch(err => err);
     };
 

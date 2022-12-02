@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SeatPicker from "react-seat-picker";
 
-import "./styles.css";
+
 
 export default class TablePick extends Component {
   state = {
