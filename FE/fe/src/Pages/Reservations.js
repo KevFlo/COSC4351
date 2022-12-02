@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import TablePick from '../component/TablePicker';
 
 
@@ -48,12 +50,22 @@ const Reservation = () => {
         await fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/sampleName/sampleEmail`, {
             method: "GET"
         })
-            .then(res => res.text())
-            .then(res => console.log(res))
+            // .then(res => res.text())
+            // .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
             .then(res => {
-                if (res[0] === 'token') {
-                    return <TablePick />
+                var tables = JSON.parse(res).tables;
+                var seats = JSON.parse(res).seats;
+                var highTraffic = JSON.parse(res).high_traffic;
+                console.log(tables);
+                console.log(seats);
+                console.log(highTraffic);
+                if (highTraffic === 'true') {
+                    alert("There will be a 10$ no show fee for this reservation");
+                    // return <TablePick />
+                    <Popup trigger={<button> Trigger</button>} position="right center">
+                        <div>Popup content here !!</div>
+                    </Popup>
                 }
             })
             .catch(err => err);
