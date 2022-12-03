@@ -40,7 +40,7 @@ const Reservation = () => {
                 tooltip: 'available table',
                 orientation: 'east'
             };
-            rRows.push(temp);
+            rRows.push([temp]);
         }
         return rRows;
     }
