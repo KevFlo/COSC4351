@@ -65,6 +65,7 @@ const Register = () => {
         .then(res => {
             if (res.error != null) {
                 console.log('Error');
+                alert(res.error);
             } else {
                 console.log('Success!');
                 

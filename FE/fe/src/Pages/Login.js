@@ -44,6 +44,8 @@ const Login = () => {
                 console.log(res);
                 if (res.token != null ) {
                     window.location.replace('http://localhost:3000/reservation');
+                }else{
+                    alert("Invalid email or password");
                 }
             })
             .then(res => this.setState({ apiResponse: res }))
