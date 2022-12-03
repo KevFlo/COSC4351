@@ -6,6 +6,7 @@ const isHighTraffic = require('../modules/high_traffic');
 // Retrieve tables that are available to be reserved
 router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     // Partysize, date, time, name, email ,and phonenumber 
+    // Parameters can probably be shortened to just partySize, date, and time
     const {partySize, date, time, phoneNumber, name, email} = req.params;
     const dateTime = date + ' ' + time;
     // Following two lines check to see if the selected date is a high traffic day (weekend or holiday)
@@ -23,7 +24,7 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     const query = pool.query(availableTables, [dateTime, dateTime, parseInt(partySize) + 1], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500);
+            res.status(500).json({ error: 'Unable to query the database' });
             return error;
         }
         //console.table(results);
@@ -46,13 +47,13 @@ router.post('/:partySize/:date/:time/:phoneNumber/:name/:email/:tableNumber', (r
     const {partySize, date, time, phoneNumber, name, email, tableNumber} = req.params;
     const dateTime = date + ' ' + time;
     console.log('Creating reservation...');
-    console.log(partySize, date, time, phoneNumber, name, email, tableNumber);
+    console.log(partySize, date, time, phoneNumber, name, email, tableNumber);   
     makeReservation = `INSERT INTO reservations (name, phone, email, date, number_guests, table_number)
     VALUES (?, ?, ?, ?, ?, ?)`;
     pool.query(makeReservation, [name, phoneNumber, email, dateTime, partySize, tableNumber], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500);
+            res.status(500).json({ error: 'Unable to query the database' });
             return error;
         }
         if (results.affectedRows === 1) {
