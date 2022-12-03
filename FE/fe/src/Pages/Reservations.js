@@ -20,7 +20,11 @@ const Reservation = () => {
 
     const [data, setData] = useState([]);
 
-    
+    const [cdata, setCData] = useState('');
+
+    const childToParent = (childdata) => {
+        setCData(childdata);
+      }
     const { partySize, date, time, name, email, phoneNumber } = formData;
 
     const onChange = (e) =>
@@ -29,16 +33,12 @@ const Reservation = () => {
     let zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]); 
     
     const cleanData = (data) => {
-        // let resSeating = data
         const rRows = [];
         var temp = {};
         for (var i = 0; i < data.length; i++) {
             temp = {
                 id: data[i][0], //table id
                 number: data[i][1], //cap number
-                isSelected: false,
-                tooltip: 'available table',
-                orientation: 'east'
             };
             rRows.push([temp]);
         }
@@ -60,7 +60,6 @@ const Reservation = () => {
                     // var json = JSON.parse(res);
                     var resSeating = zip(res.tables, res.seats);
                     var cleanSeating = cleanData(resSeating);
-                    console.log(cleanSeating);
                     var highTraffic = res.high_traffic;
                     const parentToChild = () => {
                         setData(cleanSeating);
@@ -69,7 +68,7 @@ const Reservation = () => {
 
 
                     if (highTraffic === true) {
-                        alert ("A hold fee is required to reserve on high traffic days. You must have a valid credit card on file. There will be a $10 non-refundable fee for no shows on high traffic days");
+                        alert ("There will be a $10 non-refundable fee for no shows on high traffic days");
                     }
                 }
             })
@@ -78,7 +77,7 @@ const Reservation = () => {
             
     };
 
-
+    console.log(cdata);
 
     return (
     //   <h1> Reservation</h1>
@@ -142,9 +141,9 @@ const Reservation = () => {
                     <Popup className="Reservation-Form-Form-Button" trigger={<button> Submit </button>}  
 
                         position="right center"> 
-                        <TablePick parentToChild={data}/>
-                
-                        <button>Confirm Tables</button> 
+                        <TablePick parentToChild={data} childToParent={childToParent}/>
+                        {/* send the data to db on clicking this button, data should be in cdata gathered from childToParent */}
+                        <button value={cdata}>Confirm Tables</button> 
                 
                         </Popup> 
                 </form>

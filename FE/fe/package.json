@@ -15,6 +15,7 @@
     "react-seat-picker": "^1.5.3",
     "react-tooltip": "^4.5.1",
     "reactjs-popup": "^2.0.5",
+    "semantic-ui-react": "^2.1.4",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
