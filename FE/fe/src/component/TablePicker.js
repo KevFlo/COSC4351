@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SeatPicker from "react-seat-picker";
 
+// TODO: link existing rows with the seats map from Reservations.js
 
-
-export default class TablePick extends Component {
+export default class TablePick  extends Component {
   state = {
     loading: false
   };
@@ -167,7 +167,7 @@ export default class TablePick extends Component {
             tooltipProps={{ multiline: true }}
           />
         </div> */}
-        <h1>Seat Picker Continuous Case</h1>
+        <h1>Available Seating</h1>
         <div style={{ marginTop: "100px" }}>
           <SeatPicker
             addSeatCallback={this.addSeatCallbackContinousCase}

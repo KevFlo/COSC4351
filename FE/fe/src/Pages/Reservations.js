@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import Popper from '../component/popup';
+import Popup from 'reactjs-popup'; 
+
+import 'reactjs-popup/dist/index.css'; 
 import 'reactjs-popup/dist/index.css';
 import TablePick from '../component/TablePicker';
+
 
 
 const Reservation = () => {
@@ -19,62 +22,36 @@ const Reservation = () => {
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    let zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]); 
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        /*const newReservation = {
-            partySize,
-            date,
-            time,
-            name,
-            email,
-            phoneNumber,
-        };
 
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-
-            const body = JSON.stringify(newReservation);
-
-            // const res = await axios.post('/api/users', body, config);
-            // console.log(res.data);
-        } catch (err) {
-            console.error(err.response.data);
-        }*/
-        // For testing
-        console.log("Submit");
         await fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/sampleName/sampleEmail`, {
             method: "GET"
         })
             .then(res => res.json())
-            .then(res => console.log(res))
             .then(res => {
                 if (res.error != null) { console.log('Error');}
                 else{
-                    var json = JSON.parse(res);
-                    var tables = json.tables;
-                    var seats = json.seats;
-                    var highTraffic = res["high_traffic"];
-                    console.log(tables);
-                    console.log(seats);
-                    console.log(highTraffic);
+                    // var json = JSON.parse(res);
+                    var resSeating = zip(res.tables, res.seats);
+                    var highTraffic = res.high_traffic;
+
+                    console.log(resSeating);
+
                     if (highTraffic === true) {
-                        console.log('High Traffic');
-                        // return ( <Popper />); // This is a popup that says "High Traffic Day"
-                        // return <TablePick />
-                        // <Popup trigger={<button> Trigger</button>} position="right center">
-                        //     <div>Popup content here !!</div>
-                        // </Popup>
+                        alert ("There will be a $10 non-refundable fee for no shows on high traffic days");
                     }
                 }
             })
+            .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
-            
             .catch(err => err);
+
+            
+        
     };
 
 
@@ -138,12 +115,18 @@ const Reservation = () => {
                             minLength="6"
                         />
                     </div>
-                    <input
-                        type="submit"
-                        className="Reservation-Form-Form-Button"
-                        value="Reserve"
-                    />
+                    <Popup className="Reservation-Form-Form-Button" trigger={<button> Submit </button>}  
+
+                        position="right center"> 
+                
+                        <div>SeatPicker</div> 
+                        <TablePick/>
+                
+                        <button>Click here</button> 
+                
+                        </Popup> 
                 </form>
+
                 <p className="Reservation-Form-Text">
                     Already have an account? <Link to="/login">Sign In</Link>
                 </p>
