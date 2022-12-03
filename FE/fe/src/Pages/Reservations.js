@@ -18,15 +18,60 @@ const Reservation = () => {
         phoneNumber: '',
     });
 
+    const [data, setData] = useState('');
+
+    
     const { partySize, date, time, name, email, phoneNumber } = formData;
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
     
     let zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]); 
+    
+    const cleanData = (data) => {
+        let resSeating = data
+        let cleanSeating = [];
+        let smallTble = [];
+        // let tables = data.tables;
+        // let seats = data.seats;
+        for (let i = 0; i < resSeating.length; i++) {
+            // resSeating[i] = resSeating[i].split(',');
+            if (resSeating[i][1] === partySize) {
+                cleanSeating.push(resSeating[i]);
+            }else if (resSeating[i][1] < partySize) {
+                smallTble.push(resSeating[i]);
+            }
+        }
+        // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
+
+        // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
+        for (let i = 0; i < smallTble.length; i++) {
+            for (let j = i+1 ; j < smallTble.length; j++) {
+                let temp = smallTble[i][1] + smallTble[j][1];
+                if (temp >= partySize) {
+                    cleanSeating.push([smallTble[i][0] + ',' + smallTble[j][0], smallTble[i][1] + smallTble[j][1]]);
+                }
+            }
+        }
+        return cleanSeating;
+    }
+
+// // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
+// for (let i = 0; i < smallTble.length; i++) {
+//     let temp = smallTble[i];
+//     for (let j = i + 1; j < smallTble.length; j++) {
+//         if (temp[1] + smallTble[j][1] <= partySize) {
+//             temp = [temp[0], temp[1] + smallTble[j][1]];
+//             smallTble.splice(j, 1);
+//         }
+//     }
+//     cleanSeating.push(temp);
+// }
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        
 
         await fetch(`/reservation/${partySize}/${date}/${time}/${phoneNumber}/sampleName/sampleEmail`, {
             method: "GET"
@@ -37,21 +82,23 @@ const Reservation = () => {
                 else{
                     // var json = JSON.parse(res);
                     var resSeating = zip(res.tables, res.seats);
+                    var cleanSeating = cleanData(resSeating);
+                    console.log(cleanSeating);
                     var highTraffic = res.high_traffic;
+                    const parentToChild = () => {
+                        setData(cleanSeating);
+                    }
+                    parentToChild();
 
-                    console.log(resSeating);
 
                     if (highTraffic === true) {
                         alert ("There will be a $10 non-refundable fee for no shows on high traffic days");
                     }
                 }
             })
-            .then(res => console.log(res))
             .then(res => this.setState({ apiResponse: res }))
             .catch(err => err);
-
             
-        
     };
 
 
@@ -118,11 +165,9 @@ const Reservation = () => {
                     <Popup className="Reservation-Form-Form-Button" trigger={<button> Submit </button>}  
 
                         position="right center"> 
+                        <TablePick parentToChild={data}/>
                 
-                        <div>SeatPicker</div> 
-                        <TablePick/>
-                
-                        <button>Click here</button> 
+                        <button>Confirm Tables</button> 
                 
                         </Popup> 
                 </form>

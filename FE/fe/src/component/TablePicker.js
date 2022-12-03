@@ -66,8 +66,11 @@ export default class TablePick  extends Component {
       }
     );
   };
+//   let Row = this.props.parentToChild;
 
   render() {
+
+    
     const rows = [
       [
         {
@@ -153,20 +156,7 @@ export default class TablePick  extends Component {
     const { loading } = this.state;
     return (
       <div>
-        {/* <h1>Seat Picker</h1>
-        <div style={{ marginTop: "100px" }}>
-          <SeatPicker
-            addSeatCallback={this.addSeatCallback}
-            removeSeatCallback={this.removeSeatCallback}
-            rows={rows}
-            maxReservableSeats={1}
-            alpha
-            visible
-            selectedByDefault
-            loading={loading}
-            tooltipProps={{ multiline: true }}
-          />
-        </div> */}
+        {console.log(this.props.parentToChild)}
         <h1>Available Seating</h1>
         <div style={{ marginTop: "100px" }}>
           <SeatPicker
