@@ -18,7 +18,7 @@ const Reservation = () => {
         phoneNumber: '',
     });
 
-    const [data, setData] = useState('');
+    const [data, setData] = useState([]);
 
     
     const { partySize, date, time, name, email, phoneNumber } = formData;
@@ -29,44 +29,21 @@ const Reservation = () => {
     let zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]); 
     
     const cleanData = (data) => {
-        let resSeating = data
-        let cleanSeating = [];
-        let smallTble = [];
-        // let tables = data.tables;
-        // let seats = data.seats;
-        for (let i = 0; i < resSeating.length; i++) {
-            // resSeating[i] = resSeating[i].split(',');
-            if (resSeating[i][1] === partySize) {
-                cleanSeating.push(resSeating[i]);
-            }else if (resSeating[i][1] < partySize) {
-                smallTble.push(resSeating[i]);
-            }
+        // let resSeating = data
+        const rRows = [];
+        var temp = {};
+        for (var i = 0; i < data.length; i++) {
+            temp = {
+                id: data[i][0], //table id
+                number: data[i][1], //cap number
+                isSelected: false,
+                tooltip: 'available table',
+                orientation: 'east'
+            };
+            rRows.push(temp);
         }
-        // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
-
-        // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
-        for (let i = 0; i < smallTble.length; i++) {
-            for (let j = i+1 ; j < smallTble.length; j++) {
-                let temp = smallTble[i][1] + smallTble[j][1];
-                if (temp >= partySize) {
-                    cleanSeating.push([smallTble[i][0] + ',' + smallTble[j][0], smallTble[i][1] + smallTble[j][1]]);
-                }
-            }
-        }
-        return cleanSeating;
+        return rRows;
     }
-
-// // for each small table if smaller tables can comgine to fit the party size comebine them and create a new table
-// for (let i = 0; i < smallTble.length; i++) {
-//     let temp = smallTble[i];
-//     for (let j = i + 1; j < smallTble.length; j++) {
-//         if (temp[1] + smallTble[j][1] <= partySize) {
-//             temp = [temp[0], temp[1] + smallTble[j][1]];
-//             smallTble.splice(j, 1);
-//         }
-//     }
-//     cleanSeating.push(temp);
-// }
 
 
     const onSubmit = async (e) => {
