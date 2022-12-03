@@ -16,10 +16,11 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     var seats = [];
     console.log('Retrieving available tables...');
     //console.log(partySize, date, time, phoneNumber, name, email);
-    availableTables = `SELECT * FROM tables where table_number NOT IN(
+    availableTables = `SELECT * FROM tables WHERE table_number NOT IN(
         SELECT table_number FROM reservations WHERE date BETWEEN ADDTIME(?, '-02:00') AND ADDTIME(?, '02:00')
-    );`;
-    pool.query(availableTables, [dateTime, dateTime], (error, results) => {
+    )
+    AND number_seats <= ?;`;
+    const query = pool.query(availableTables, [dateTime, dateTime, parseInt(partySize) + 1], (error, results) => {
         if (error) {
             console.error(error.message);
             res.status(500);
@@ -30,8 +31,8 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
             tables.push(results[key].table_number);
             seats.push(results[key].number_seats);
         });
-        //console.log(tables);
-        //console.log(seats);
+        console.log(tables);
+        console.log(seats);
         res.status(200).json({
             tables: tables,
             seats: seats,
