@@ -16,7 +16,7 @@ router.get('/:email/:password', (req, res) => {
     pool.query(login, [email, hash], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500); 
+            res.status(500).json({ error: 'There was an error querying the database'});
             return error;
         }
         if (results.length === 1) {
@@ -28,10 +28,10 @@ router.get('/:email/:password', (req, res) => {
             // });
             const token = jwt.sign({user}, process.env.SECRET);
             res.json({token});
-
         }
         else {
             console.log('Incorrect Login! Please try again!');
+            res.status(200).json({error: 'Incorrect login'});
         }
     });
 });
