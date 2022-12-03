@@ -24,7 +24,7 @@ router.get('/:partySize/:date/:time/:phoneNumber/:name/:email', (req, res) => {
     const query = pool.query(availableTables, [dateTime, dateTime, parseInt(partySize) + 1], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500);
+            res.status(500).json({ error: 'Unable to query the database' });
             return error;
         }
         //console.table(results);
@@ -47,29 +47,13 @@ router.post('/:partySize/:date/:time/:phoneNumber/:name/:email/:tableNumber', (r
     const {partySize, date, time, phoneNumber, name, email, tableNumber} = req.params;
     const dateTime = date + ' ' + time;
     console.log('Creating reservation...');
-    console.log(partySize, date, time, phoneNumber, name, email, tableNumber);
-    var unique = false; 
-    var reservationNum
-    // Generate a random reservation number and check to see if it's unique
-    do {
-        reservationNum = Math.floor(Math.random() * 10000000000);
-        checkResNumExist = 'SELECT reservation_number FROM reservations WHERE reservation_number = ?';
-        pool.query(checkResNumExist, reservationNum, (err, result) => {
-            if (err) {
-                console.log(err.message);
-                return err;
-            }
-            if (result.length === 0) {
-                unique = true;
-            }
-        })
-    } while (!unique);
-    makeReservation = `INSERT INTO reservations (reservation_number, name, phone, email, date, number_guests, table_number)
-    VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(makeReservation, [reservationNum, name, phoneNumber, email, dateTime, partySize, tableNumber], (error, results) => {
+    console.log(partySize, date, time, phoneNumber, name, email, tableNumber);   
+    makeReservation = `INSERT INTO reservations (name, phone, email, date, number_guests, table_number)
+    VALUES (?, ?, ?, ?, ?, ?)`;
+    pool.query(makeReservation, [name, phoneNumber, email, dateTime, partySize, tableNumber], (error, results) => {
         if (error) {
             console.error(error.message);
-            res.status(500);
+            res.status(500).json({ error: 'Unable to query the database' });
             return error;
         }
         if (results.affectedRows === 1) {
