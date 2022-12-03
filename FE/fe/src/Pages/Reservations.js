@@ -92,7 +92,7 @@ const Reservation = () => {
 
 
                     if (highTraffic === true) {
-                        alert ("There will be a $10 non-refundable fee for no shows on high traffic days");
+                        alert ("A hold fee is required to reserve on high traffic days. You must have a valid credit card on file. There will be a $10 non-refundable fee for no shows on high traffic days");
                     }
                 }
             })

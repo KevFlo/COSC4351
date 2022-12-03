@@ -38,18 +38,23 @@ const Login = () => {
         // console.error(err.response.data);
         // }
         // To test login
-        await fetch(`/login/${email}/${password}`)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                if (res.token != null ) {
-                    window.location.replace('http://localhost:3000/reservation');
-                }else{
-                    alert("Invalid email or password");
-                }
-            })
-            .then(res => this.setState({ apiResponse: res }))
-            .catch(err => err);
+        await fetch(`/login/${email}/${password}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.token != null ) {
+                window.location.replace('http://localhost:3000/reservation');
+            }else{
+                alert("Invalid email or password");
+            }
+        })
+        .then(res => this.setState({ apiResponse: res }))
+        .catch(err => err);
         
     };
 
